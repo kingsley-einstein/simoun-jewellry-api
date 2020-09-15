@@ -1,0 +1,11 @@
+{
+ "compilerOptions": {
+  "rootDir": "src",
+  "outDir": "build",
+  "esModuleInterop": true,
+  "sourceMap": true,
+  "lib": [
+   "DOM", "ES2015"
+  ]
+ }
+}
