@@ -8,7 +8,7 @@ export class AuthModel {
   this.define(s);
  }
 
- define(s: sequelize.Sequelize) {
+ private define(s: sequelize.Sequelize) {
   this.model = s.define("User", {
    id: {
     type: sequelize.DataTypes.UUID,
@@ -69,5 +69,13 @@ export class AuthModel {
     where: { email }
    })
   );
+ }
+
+ async updateById(id: string, body: any): Promise<sequelize.Model> {
+  const u = await this.model.update(body, {
+   where: { id }
+  });
+  const [, [ doc ] ] = u;
+  return Promise.resolve(doc); 
  }
 }
