@@ -4,7 +4,7 @@ import { Session } from "../db";
 import { CustomError } from "../custom";
 import { JWT } from "../helpers";
 
-export const checkToken = async (req: express.Request & { payload: any }, res: express.Response, next: express.NextFunction) => {
+export const checkToken = async (req: express.Request & { payload: any; sessionId: string; }, res: express.Response, next: express.NextFunction) => {
  try {
   const { authorization } = req.headers;
 
@@ -37,6 +37,7 @@ export const checkToken = async (req: express.Request & { payload: any }, res: e
    throw new CustomError(401, "Invalid session. Sign in again");
 
   req.payload = payload;
+  req.sessionId = payload.sessionId;
   next();
  } catch (error) {
   res.status(error.c || 500).json({
