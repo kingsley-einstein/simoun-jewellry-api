@@ -1,6 +1,6 @@
 import express from "express";
 import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
-import { Session } from "../db";
+import { Session, User } from "../db";
 import { CustomError } from "../custom";
 import { JWT } from "../helpers";
 
@@ -38,6 +38,23 @@ export const checkToken = async (req: express.Request & { payload: any; sessionI
 
   req.payload = payload;
   req.sessionId = payload.sessionId;
+  next();
+ } catch (error) {
+  res.status(error.c || 500).json({
+   statusCode: error.c || 500,
+   response: error.message
+  });
+ }
+};
+
+export const emailInUse = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+ try {
+  const { email } = req.body;
+  const isRegistered = await User.findByEmail(email);
+  
+  if (isRegistered)
+   throw new CustomError(400, `User with email ${email} already registered`);
+
   next();
  } catch (error) {
   res.status(error.c || 500).json({
