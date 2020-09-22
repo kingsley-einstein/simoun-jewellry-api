@@ -10,7 +10,7 @@ export class Validators {
  static errorMessages(body: any, keys: Array<string>): Array<string> {
   let messages: Array<string> = [];
   for (const key of keys)
-   if (!Object.keys(body).includes(key) || !body[key])
+   if (!Object.keys(body).includes(key) || !body[key] || (body[key].toString().trim()).length === 0)
     messages = [...messages, key + " is required"]
 
   return messages;

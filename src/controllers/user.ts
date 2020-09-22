@@ -82,4 +82,19 @@ export class UserController {
    });
   }
  }
+
+ static async authenticate(req: express.Request & { payload: any; }, res: express.Response) {
+  try {
+   const { email, id, sessionId } = req.payload;
+   res.status(200).json({
+    statusCode: 200,
+    response: { email, id, sessionId }
+   });
+  } catch (error) {
+   res.status(500).json({
+    statusCode: 500,
+    response: error.message
+   });
+  }
+ } 
 }

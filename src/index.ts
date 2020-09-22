@@ -11,7 +11,7 @@ config(app);
 
 app.listen(port, async () => {
  log(`Express server running on port: ${port}`);
- const s = sequelize.sync();
+ const s = await sequelize.sync();
  if (s)
   log("Sequelize connected");
 });

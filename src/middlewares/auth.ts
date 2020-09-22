@@ -2,7 +2,7 @@ import express from "express";
 import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
 import { Session, User } from "../db";
 import { CustomError } from "../custom";
-import { JWT } from "../helpers";
+import { JWT, Validators } from "../helpers";
 
 export const checkToken = async (req: express.Request & { payload: any; sessionId: string; }, res: express.Response, next: express.NextFunction) => {
  try {
@@ -63,3 +63,20 @@ export const emailInUse = async (req: express.Request, res: express.Response, ne
   });
  }
 };
+
+export const keysArePresent = (keys: Array<string>) => {
+ return (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  try {
+   const { body } = req;
+   if (!Validators.keysPresent(body, keys))
+    throw new CustomError(400, `${Validators.errorMessages(body, keys).join("\n")}`);
+
+   next();
+  } catch (error) {
+   res.status(error.c || 500).json({
+    statusCode: error.c || 500,
+    response: error.message
+   });
+  }
+ };
+}
