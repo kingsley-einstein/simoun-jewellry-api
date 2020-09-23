@@ -52,4 +52,25 @@ export class ProductModel {
    this.model.create(body)
   );
  }
+
+ findById(id: any): Promise<sequelize.Model> {
+  return Promise.resolve(
+   this.model.findByPk(id)
+  );
+ }
+
+ async updateById(id: any, update: any): Promise<sequelize.Model> {
+  const [, [ u ]] = await this.model.update(update, {
+   where: { id }
+  });
+  return Promise.resolve(u); 
+ }
+
+ deleteById(id: any): Promise<number> {
+  return Promise.resolve(
+   this.model.destroy({
+    where: { id }
+   })
+  );
+ }
 }
