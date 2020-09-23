@@ -1,9 +1,9 @@
+import env from "../../env";
+
 const config = {
  development: {
-  host: "",
-  port: 0,
+  ...env.db.development,
   dialect: "postgres",
-  database: "",
   define: {
    underscored: true
   },

@@ -69,7 +69,15 @@ export const keysArePresent = (keys: Array<string>) => {
   try {
    const { body } = req;
    if (!Validators.keysPresent(body, keys))
-    throw new CustomError(400, `${Validators.errorMessages(body, keys).join("\n")}`);
+    throw new CustomError(
+     400, 
+     `${
+      Validators.errorMessages(body, keys)
+      .join("\n")
+      .replace("email", "Email")
+      .replace("password", "Password")
+     }`
+    );
 
    next();
   } catch (error) {

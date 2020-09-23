@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p .",
+    "clean": "rimraf build",
+    "compile": "npm run clean && npm run build",
+    "start": "npm run compile && cross-env NODE_ENV=development DEBUG=app,logging node build/index"
   },
   "repository": {
     "type": "git",
