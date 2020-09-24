@@ -1,7 +1,12 @@
 import express from "express";
+import multer from "multer";
 import { CustomError } from "../custom";
 
-export const upload = (req: express.Request & { fileObject: any }, res: express.Response, next:express.NextFunction) => {
+export const m = multer({
+ storage: multer.memoryStorage()
+});
+
+export const upload = (req: express.Request & { fileObject: any; payload: any; }, res: express.Response, next:express.NextFunction) => {
  try {
   const { file } = req;
   
@@ -12,7 +17,8 @@ export const upload = (req: express.Request & { fileObject: any }, res: express.
    price: req.body.price,
    mimetype: file.mimetype,
    name: req.body.productName,
-   bytes64: Buffer.from(file.buffer).toString("base64")
+   bytes64: Buffer.from(file.buffer).toString("base64"),
+   uploadedBy: req.payload.id
   };
   next();
  } catch (error) {

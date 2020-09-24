@@ -36,6 +36,13 @@ export class ProductModel {
    bytes64: {
     type: sequelize.DataTypes.TEXT,
     allowNull: false
+   },
+   uploadedBy: {
+    type: sequelize.DataTypes.UUID,
+    references: {
+     key: "id",
+     model: "User"
+    }
    }
   },{
    hooks: {
@@ -59,6 +66,14 @@ export class ProductModel {
   );
  }
 
+ findByUploader(uploadedBy: any): Promise<Array<sequelize.Model>> {
+  return Promise.resolve(
+   this.model.findAll({
+    where: { uploadedBy }
+   })
+  );
+ }
+
  async updateById(id: any, update: any): Promise<sequelize.Model> {
   const [, [ u ]] = await this.model.update(update, {
    where: { id }
@@ -70,6 +85,14 @@ export class ProductModel {
   return Promise.resolve(
    this.model.destroy({
     where: { id }
+   })
+  );
+ }
+
+ deleteByUploader(uploadedBy: any): Promise<number> {
+  return Promise.resolve(
+   this.model.destroy({
+    where: { uploadedBy }
    })
   );
  }
