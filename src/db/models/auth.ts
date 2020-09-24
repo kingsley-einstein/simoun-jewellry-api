@@ -78,4 +78,8 @@ export class AuthModel {
   const [, [ doc ] ] = u;
   return Promise.resolve(doc); 
  }
+
+ getModel() {
+  return this.model;
+ }
 }

@@ -9,3 +9,5 @@ export const sequelize = new Sequelize({
 export const User = new AuthModel(sequelize);
 export const Session = new SessionModel(sequelize);
 export const Product = new ProductModel(sequelize);
+
+Product.associate(User.getModel(), "owner");

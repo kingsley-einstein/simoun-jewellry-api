@@ -39,10 +39,7 @@ export class ProductModel {
    },
    uploadedBy: {
     type: sequelize.DataTypes.UUID,
-    references: {
-     key: "id",
-     model: "User"
-    }
+    allowNull: false
    }
   },{
    hooks: {
@@ -51,6 +48,15 @@ export class ProductModel {
      m.id = id;
     }
    }
+  });
+ }
+
+ associate(m: sequelize.ModelStatic<sequelize.Model>, as: string) {
+  return this.model.belongsTo(m, {
+   onDelete: "CASCADE",
+   onUpdate: "CASCADE",
+   foreignKey: "uploadedBy",
+   as
   });
  }
 
