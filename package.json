@@ -8,7 +8,8 @@
     "build": "tsc -p .",
     "clean": "rimraf build",
     "compile": "npm run clean && npm run build",
-    "start": "npm run compile && cross-env NODE_ENV=development DEBUG=app,logging node build/index"
+    "start": "npm run compile && cross-env NODE_ENV=development DEBUG=app,logging node build/index",
+    "prod": "npm run compile && cross-env NODE_ENV=production DEBUG=app,logging node build/index"
   },
   "repository": {
     "type": "git",
@@ -42,6 +43,7 @@
     "debug": "^4.1.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^4.0.3"
   }
 }
