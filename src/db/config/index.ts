@@ -13,10 +13,8 @@ const config = {
   }
  },
  production: {
-  host: "",
-  port: 0,
+  ...env.db.production,
   dialect: "postgres",
-  database: "",
   define: {
    underscored: true
   },
