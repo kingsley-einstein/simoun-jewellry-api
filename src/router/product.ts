@@ -24,6 +24,8 @@ router.patch(
  ProductController.updateProduct
 );
 
+router.patch("/add_to_cart/:productId/:cartId", Auth.checkToken, ProductController.addToCart);
+
 router.delete("/:id", Auth.checkToken, ProductController.deleteSingleProduct);
 
 router.delete("/byUser", Auth.checkToken, ProductController.deleteByUploader);

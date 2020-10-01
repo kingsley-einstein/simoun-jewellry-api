@@ -40,6 +40,10 @@ export class ProductModel {
    uploadedBy: {
     type: sequelize.DataTypes.UUID,
     allowNull: false
+   },
+   cart: {
+    type: sequelize.DataTypes.UUID,
+    allowNull: true
    }
   },{
    hooks: {

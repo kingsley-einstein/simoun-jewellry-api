@@ -1,5 +1,5 @@
 import express from "express";
-import { Product } from "../db";
+import { Product, Cart } from "../db";
 import { CustomError } from "../custom";
 
 export class ProductController {
@@ -13,6 +13,38 @@ export class ProductController {
   } catch (error) {
    res.status(500).json({
     statusCode: 500,
+    response: error.message
+   });
+  }
+ }
+
+ static async addToCart(req: express.Request & { payload: any; }, res: express.Response) {
+  try {
+   const { payload, params } = req;
+   const product = await Product.findById(params.productId);
+
+   if (!product)
+    throw new CustomError(404, "Product not found.");
+
+   const carts = (await Cart.findByOwner(payload.id)).map((c) => c.toJSON());
+   const cart = carts.find((c: any) => c.id === params.cartId);
+
+   if (!cart)
+    throw new CustomError(404, "Cart not found.");
+
+   const update = (await Product.updateById((<any> product).id, { cart: (<any> cart).id }));
+   const response = {
+    message: "Successfully added product to cart",
+    update
+   };
+
+   res.status(200).json({
+    statusCode: 200,
+    response
+   });
+  } catch (error) {
+   res.status(error.c || 500).json({
+    statusCode: error.c || 500,
     response: error.message
    });
   }

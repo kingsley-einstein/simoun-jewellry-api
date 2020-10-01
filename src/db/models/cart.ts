@@ -39,7 +39,8 @@ export class CartModel {
   const hasMany = this.model.hasMany(productDef.model, {
    onDelete: "SET NULL",
    onUpdate: "CASCADE",
-   as: productDef.modelAs
+   as: productDef.modelAs,
+   foreignKey: "cart"
   });
 
   return [ belongsTo, hasMany ];
@@ -49,5 +50,39 @@ export class CartModel {
   return Promise.resolve(
    this.model.create(body)
   );
+ }
+
+ findByOwner(owner: string): Promise<Array<sequelize.Model>> {
+  return Promise.resolve(
+   this.model.findAll({
+    where: { owner }
+   })
+  );
+ }
+
+ findById(id: string): Promise<sequelize.Model> {
+  return Promise.resolve(
+   this.model.findByPk(id)
+  );
+ }
+
+ deleteSingleCart(id: string): Promise<number> {
+  return Promise.resolve(
+   this.model.destroy({
+    where: { id }
+   })
+  );
+ }
+
+ deleteAllCarts(owner: string): Promise<number> {
+  return Promise.resolve(
+   this.model.destroy({
+    where: { owner }
+   })
+  );
+ }
+
+ getModel() {
+  return this.model;
  }
 }
