@@ -11,6 +11,13 @@ const env = {
    username: process.env.DB_USER,
    password: process.env.DB_PASS,
    port: parseInt(process.env.DB_PORT)
+  },
+  production: {
+   database: process.env.DB_NAME,
+   host: process.env.DB_HOST,
+   username: process.env.DB_USER,
+   password: process.env.DB_PASS,
+   port: parseInt(process.env.DB_PORT)
   }
  }
 };
